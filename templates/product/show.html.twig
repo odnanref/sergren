@@ -1,0 +1,259 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "Product" | trans }}{% endblock %}
+
+{% block body %}
+<script type="text/Javascript">
+	var myattributes = new Array();
+</script>
+<ul class="nav nav-tabs" id="myTabs" role="tablist">
+	<li role="presentation" class="active"><a href="#home" id="product-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">
+		&nbsp;{{ "Product" | trans }}&nbsp;</a>
+	</li> 
+	<li role="presentation"><a href="#productattribute" role="tab" id="productattribute-tab" data-toggle="tab" aria-controls="productattribute">
+		&nbsp;{{ "ProductAttribute" | trans }}&nbsp;</a>
+	</li>
+	<li role="presentation"><a href="#media" role="tab" id="media-tab" data-toggle="tab" aria-controls="media">
+		&nbsp;{{ "Media" | trans }}&nbsp;</a>
+	</li>
+</ul>
+
+<div class="tab-content" id="myTabContent" style="width: 100%;">
+	 	<div class="tab-pane fade in active" role="tabpanel" id="home" aria-labelledby="product-tab"> 
+	 		<h1>{{ "Product" | trans }}</h1>
+
+	<table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ product.id }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Name" | trans }}</th>
+                <td>{{ product.name }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Description" | trans }}</th>
+                <td>{{ product.description }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Price" | trans }}</th>
+                <td>{{ product.price }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Keywords" | trans }}</th>
+                <td>{{ product.keywords }}</td>
+            </tr>
+            <tr>
+                <th>{{ "State" | trans }}</th>
+                <td>{{ product.state ? 'Activo' : 'Desactivo' }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Datecreated" | trans }}</th>
+                <td>{{ product.datecreated ? product.datecreated|date('Y-m-d H:i:s') : date("Y-m-d H:i:s") }}</td>
+            </tr>
+            <tr>
+            	<th>{{ "Categories" | trans }}</th>
+            	<td>
+                	<ul>
+                	{% for cats in product.categories %}
+                		<li>
+                			<a href="{{ path("category_show", {"id": cats.id}) }}">
+                			    {{ cats.name }}
+                			</a>
+                		</li>
+                	{% endfor %}
+                	</ul>
+            	</td>
+            </tr>
+        </tbody>
+    </table>  
+	 		
+	 	</div> 
+	 	
+	 	
+	 	<div class="tab-pane fade" role="tabpanel" id="productattribute" aria-labelledby="productattribute-tab">
+	 		{%for attribute in attributes %}
+	 		<div class="row" id="row_{{ attribute.id }}">
+	 			<div class="col">
+    	 			<input type="hidden" id="id_{{ attribute.id }}" name="id_{{ attribute.id }}" value="{{ attribute.id }}" />
+    	 			<input type="hidden" id="name_{{ attribute.id }}" name="name_{{ attribute.id }}" value="{{ attribute.name }}" />
+    	 			<label for="value_{{ "attribute.id" }}">{{ attribute.name }}</label>&nbsp;
+	 			</div>
+	 			
+	 			<div class="col">
+	 				<input type="text"  id="value_{{ attribute.id }}" name="value_{{ attribute.id }}" id="{{ attribute.name }}" value="{{ attribute.value }}"/>
+	 			</div>
+	 			
+	 			<div class="col">
+	 				<a href="javascript:deleteAttribute('{{ attribute.id }}');" class="btn btn-danger">{{ "Delete" | trans }}</a>
+	 			</div>
+	 			
+	 			
+	 			<script type="text/Javascript">
+					myattributes.push('{{ attribute.id }}');
+	 			</script>
+	 			
+	 		</div>
+			{%endfor%}
+			<p>
+			<button onClick="saveAll();" class="btn btn-primary">{{ "Save" | trans }}</button>
+			</p>
+	 	</div>
+	 	
+	 	<div class="tab-pane fade" role="tabpanel" id="media" aria-labelledby="media-tab"> 
+	 		<h1>{{ "Media" | trans }}</h1>
+	 		
+	 		<div class="row">
+	 		<h3>{{ "Create new" | trans }} {{ "Media" | trans }}</h3>
+    	 		<div>
+    	 		<form id="uploadmedia">
+    	 		<label for="name">{{ "Name" | trans }}</label>
+        	 		<input id="media_name" name="media[name]" type="text" />
+    	 		</div>
+    	 		<div>
+    	 		<label for="media_description">{{ "Description" | trans }}</label>
+        	 		<input id="media_description" name="media[description]" type="text" />
+    	 		</div>
+    	 		<div>
+        	 		<label for="media_arquivo">{{ "File" | trans }}</label>
+        	 		<input id="media_arquivo" name="media[path]"  type="file" />
+    	 		</div>
+    	 		<input id="media_product" name="media[product]"  type="hidden" value="{{ product.id }}" />
+    	 		
+    	 		<input type="submit" class="btn btn-primary" value="{{ "Save" | trans }}"/>
+    	 		
+    	 		</form>
+    	 		
+    	 		<button class="btn btn-primary" onClick="clearMediaFields();">{{ "New" | trans }}</button>
+	 		</div>
+	 		
+	 		<div class="row" id="displaywindow">
+	 		{%for medium in media %}
+	 		<div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
+                <img src="{{ asset('uploads/media/' ~ medium.path) }}" class="img-responsive" width="120" height="120" />
+                {{ include('media/_delete_form.html.twig') }}
+            </div>
+	 		{% endfor %}
+	 		</div>
+			<br/>
+	 	</div>
+	 	 
+</div>
+ 
+
+	<ul class="nav nav-pills">
+	<li role="presentation">
+		<a href="{{ path('product_index') }}" class="btn">{{ "back to list" | trans }}</a>&nbsp;&nbsp;
+	</li>
+	<li role="presentation">
+		<a href="{{ path('product_edit', {'id': product.id}) }}" class="btn">{{ "edit" | trans }}</a>&nbsp;&nbsp;
+	</li>
+	<li role="presentation">
+	{{ include('product/_delete_form.html.twig') }}&nbsp;&nbsp;
+	</li>
+    </ul>  
+    
+    <script type="text/Javascript">
+    
+    	$('#myTabs a').click(function (e) {
+    	  e.preventDefault()
+    	  $(this).tab('show')
+    	});
+
+    	function saveAll() {
+			myattributes.forEach(function (elem){
+				save(elem);
+			});
+        }
+    	
+    	function save(target) {
+
+    		var id = $("#id_"+target).val();
+    		var name = $("#name_"+target).val();
+    		var value = $("#value_"+target).val();
+    		console.log("Updating id " + id + " with name " + name + " and value " + value );
+
+    		var http_url = "{{ path("product_attribute_put", {"id": "ID", "value": "VALUE" })}}";
+    		http_url = http_url.replace("ID", id);
+    		http_url = http_url.replace("VALUE", value);
+    		
+    		$.ajax({
+        	    url: http_url,
+        	    data: {"value": value},
+        	    type: 'PUT',
+        	    success: function () {
+        	    	$("#value_" + target).css("background-color", "green");
+            	    },
+            	error: function (xmlreq, ajaxoptions, error) {
+            		$("#value_" + target).css("background-color", "red");
+            		console.log("got error trying to save " + xmlreq.responseText + " err " + error );
+                	},
+        	    dataType: "json"
+    	  });
+    	}
+
+		$("#uploadmedia").submit(function(evt) {
+		      evt.preventDefault();
+		      var formData = new FormData($(this)[0]);
+		   $.ajax({
+		       url: '{{ path("media_new_by_hidden")}}',
+		       type: 'POST',
+		       data: formData,
+		       async: false,
+		       cache: false,
+		       contentType: false,
+		       enctype: 'multipart/form-data',
+		       processData: false,
+		       success: function (response) {
+		        $("#media_name").css("background-color", "green");
+		        console.log("Image saved.");
+		        var image_name = response.image;
+
+		        var locationsrc = "{{ asset('uploads/media/IMAGENAME') }}";
+		        locationsrc = locationsrc.replace("IMAGENAME", image_name);
+		        var frameimage = "<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\"><img src=\"" + locationsrc + "\" class=\"img-responsive\" width=\"120\" height=\"120\" /></div>";
+		        $("#displaywindow").append(frameimage);
+		         
+		       },
+		       error: function(xmlreq, ajaxOptions, error) {
+		    	   $("#media_name").css("background-color", "red");
+		    	   console.log("Image not saved because " + error + xmlreq.responseText);
+		    	   alert("Erro " + xmlreq.responseText);
+			       }
+		   });
+		   return false;
+		 });
+
+		function clearMediaFields() {
+			$("#media_name").val("");
+			$("#media_description").val("");
+		}
+
+		function deleteAttribute(target) {
+			if (confirm("Quer mesmo eliminar este item?")) {
+				var http_url = "{{ path("product_attribute_remove", {"id": "ID"})}}";
+	    		http_url = http_url.replace("ID", target);
+	    		
+	    		$.ajax({
+	        	    url: http_url,
+	        	    type: 'DELETE',
+	        	    success: function () {
+	        	    	$("#row_" + target).remove();
+	        	    	console.log("removed target " + target );
+	        	    	alert("Removido.");
+	            	    },
+	            	error: function (xmlreq, ajaxoptions, error) {
+	                	$("#value_" + target).css("background-color", "red");
+	                	console.log("got error trying to save " + xmlreq.responseText + " err " + error );
+	                },
+	        	    dataType: "json"
+	    	  });
+			}
+			
+		}
+    	
+    	$('#myTabs a:first').tab('show')
+    </script>
+    
+{% endblock %}

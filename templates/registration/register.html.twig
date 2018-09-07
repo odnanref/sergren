@@ -1,0 +1,18 @@
+{# templates/registration/register.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "Product" | trans }} {{ "index" | trans }}{% endblock %}
+
+{% block body %}
+
+{{ form_start(form) }}
+    {{ form_row(form.username) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.role) }}
+    {{ form_row(form.plainPassword.first) }}
+    {{ form_row(form.plainPassword.second) }}
+
+    <button type="submit">Registrar!</button>
+{{ form_end(form) }}
+
+{% endblock %}

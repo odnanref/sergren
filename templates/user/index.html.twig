@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "User" | trans }} {{ "index" | trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ "User" | trans }} {{ "index" | trans }}</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{{ "Username" | trans }}</th>
+                <th>{{ "Email" | trans }}</th>
+                <th>{{ "IsActive" | trans }}</th>
+                <th>{{ "Role" | trans }}</th>
+                <th>{{ "actions" | trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.isActive ? 'Sim' : 'Não' }}</td>
+                <td>{{ user.role }}</td>
+                <td>
+                    <a href="{{ path('user_show', {'id': user.id}) }}">{{ "show" | trans }}</a>
+                    <a href="{{ path('user_edit', {'id': user.id}) }}">{{ "edit" | trans }}</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">{{ "no records found" | trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_new') }}">{{ "Create new" | trans }}</a>
+{% endblock %}

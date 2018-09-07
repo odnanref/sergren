@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "NewsletterSubscriber" | trans }} {{"index" | trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ "NewsletterSubscriber" | trans }} {{"index" | trans }}</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>{{ "Name" | trans }}</th>
+                <th>{{ "Email" | trans }}</th>
+                <th>{{ "State" | trans }}</th>
+                <th>{{ "actions" | trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for newsletter_subscriber in newsletter_subscribers %}
+            <tr>
+                <td>{{ newsletter_subscriber.id }}</td>
+                <td>{{ newsletter_subscriber.name }}</td>
+                <td>{{ newsletter_subscriber.email }}</td>
+                <td>{{ newsletter_subscriber.state ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('newsletter_subscriber_show', {'id': newsletter_subscriber.id}) }}">{{ "show" | trans }}</a>
+                    <a href="{{ path('newsletter_subscriber_edit', {'id': newsletter_subscriber.id}) }}">{{ "edit" | trans }}</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">{{ "no records found" | trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('newsletter_subscriber_new') }}">{{ "Create new" | trans }}</a>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'basesite.html.twig' %}
+
+{% block title %}{{ category.name }}{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+	<div class="row"><h1>{{ category.name }}</h1></div>
+	
+	<div class="row">{{ "Medias" | trans }}</div>
+	
+	<div class="row">
+		{% for product in category.products %}
+		<div class="col-md-4">
+		<div class="card mb-4 box-shadow">
+		{% if product.medias | length > 0 %}
+		    {% set imagelocation = product.medias[0].path %}
+		{% else %}
+		    {% set imagelocation = "none.jpeg" %}
+		{% endif %}
+           <img class="card-img-top" alt="{{ product.name }}" style="height: 225px; width: 100%; display: block;" src="{{ asset('uploads/media/' ~ imagelocation) }}" data-holder-rendered="true">
+                <div class="card-body">
+                  <p class="card-text">
+                  {{ product.description }}
+                  </p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <a type="button" class="btn btn-sm btn-outline-secondary" href="{{ path("frontend_view_car", {id: product.id}) }}">{{ "show" | trans }}</a>
+                    </div>
+                    <small class="text-muted">{{ product.name }}</small>
+                  </div>
+                </div>
+         </div>
+		</div>
+        {% endfor %}
+	</div>
+
+</div>
+
+{% endblock %}

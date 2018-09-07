@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "Edit" | trans }} {{ "NewsletterSubscriber" | trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ "Edit" | trans }} {{ "NewsletterSubscriber" | trans }}</h1>
+
+    {{ include('newsletter_subscriber/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('newsletter_subscriber_index') }}">{{ "back to list" | trans }}</a>
+
+    {{ include('newsletter_subscriber/_delete_form.html.twig') }}
+{% endblock %}

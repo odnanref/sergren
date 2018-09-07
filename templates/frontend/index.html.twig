@@ -1,0 +1,41 @@
+{% extends 'basesite.html.twig' %}
+
+{% block title %}{{ "Company" | trans }}!{% endblock %}
+
+{% block body %}
+
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel" data-slide-to="1"></li>
+          <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+        {% for item in productView %}
+          <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
+          {% if (item.medias | length > 0 ) %}
+            <img class="{{ item.id }}-slide" src="{{ asset('uploads/media/' ~ item.medias[0].path) }}" alt="{{ item.name }} {{ item.id }} slide">
+          {% endif %}
+            <div class="container">
+              <div class="carousel-caption text-left">
+                <h1>{{ item.name }}</h1>
+                <p>{{ item.description }}</p>
+                <p><a class="btn btn-lg btn-primary" href="{{ path("frontend_view_car", { id: item.id }) }}" role="button">{{ "show" | trans }}</a></p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+        </div>
+        
+        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">{{ "label_previous" | trans }}</span>
+        </a>
+        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">{{ "label_next" | trans }}</span>
+        </a>
+</div>
+      
+      
+{% endblock %}

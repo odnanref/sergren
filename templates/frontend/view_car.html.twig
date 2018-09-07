@@ -1,0 +1,99 @@
+{% extends 'basesite.html.twig' %}
+
+{% block title %} {{ product.name }} {% endblock %}
+
+{% block metadata %}
+<meta property="og:title" content="{{ product.name }} {{ "Company" | trans }}" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{app.request.uri}}{{ path("frontend_view_car", {id: product.id}) }}" />
+<meta property="og:description" content="{{ product.description }}" />
+
+{% if product.medias|length > 0 %}
+	{% set imagelocation = product.medias[0].path %}
+{% else %}
+	{% set imagelocation = "none.jpeg" %}
+{% endif %}
+
+<meta property="og:image" content="{{app.request.uri}}{{ asset('uploads/media/' ~ imagelocation) }}" />
+
+{% endblock %}
+
+{% block stylesheets %}
+
+<style type="text/css">
+
+@media (max-width: 900px) {
+	#mainimage {
+		width: 500px;
+	}
+}
+
+@media (max-width: 320px) {
+	#mainimage {
+		width: 320px;
+	}
+}
+
+</style>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+<div class="jumbotron-fluid">
+  <h1 class="display-4">{{ product.name }}</h1>
+  <p class="lead">{{ product.description }}</p>
+  <hr class="my-4">
+  {% if product.medias | length > 0  %}
+	<img src="{{ asset('uploads/media/' ~ product.medias[0].path) }}" alt="{{ product.name }} images" id="mainimage" />
+  {% endif %}
+  <a class="btn btn-outline-success my-2 my-sm-0" href="#" role="button">{{ "Get Contacted" | trans }}</a>
+</div>
+
+    <div class="row">
+    	<h1>{{ "Media" | trans }}</h1>
+    </div>
+    
+<div class="row">
+    {% for media in product.medias %}
+    <div class="col">
+    	<img class="mr-3" src="{{ asset('uploads/media/' ~ media.path) }}" alt="{{ media.name }} {{ media.description }}" style="width: 120px;" onClick="display('{{ media.path }}');"/>
+	</div>
+    {% endfor %}
+</div>
+    
+<div class="row">
+	<h3>{{ "Attributes" | trans }}</h3>
+</div>    
+    <div class="row" style="background-color: green; color: white; font-weight: bold;">
+    {% for attrib in product.productAttributes %}
+    {% if attrib.type != 'hidden' %}
+      <div class="col">
+          <span style="color: black;">{{ attrib.name }}</span>&nbsp;
+          {{ attrib.value }}
+      </div>
+      
+          {% if loop.index%2 == 0 %}
+          	<div class="w-100"></div>
+          {% endif %}
+      {% endif %}
+     {% endfor %}
+    </div>
+    
+</div>
+
+<script type="text/Javascript">
+function display(image) {
+	var http_url = '{{ asset('uploads/media/' ~ 'IMAGELOCATION') }}';
+	http_url = http_url.replace('IMAGELOCATION', image);
+	var elem = document.getElementById("mainimage");
+	if (elem) {
+		elem.src = http_url;
+		$('html, body').animate({ scrollTop: 0 }, 'fast');
+	}
+}
+</script>
+
+{% endblock %}

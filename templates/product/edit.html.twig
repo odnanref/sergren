@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "Edit" | trans }} {{ "Product" | trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ "Edit" | trans }} {{ "Product" | trans }}</h1>
+<ul class="nav nav-pills">
+    <li role="presentation">
+        {{ include('product/_form.html.twig', {'button_label': 'Actualizar'}) }}
+    </li>
+
+    <li role="presentation"><a href="{{ path('product_index') }}" class="btn btn-primary">{{ "back to list" | trans }}</a></li>
+
+    <li role="presentation">
+        {{ include('product/_delete_form.html.twig') }}
+    </li>
+</ul>
+{% endblock %}

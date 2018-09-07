@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "Edit" | trans }} {{"Category" | trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ "Edit" | trans }} {{"Category" | trans }}</h1>
+
+    {{ include('category/_form.html.twig', {'button_label': 'Atualizar'}) }}
+
+    <a href="{{ path('category_index') }}">{{ "back to list" | trans }}</a>
+
+    {{ include('category/_delete_form.html.twig') }}
+{% endblock %}

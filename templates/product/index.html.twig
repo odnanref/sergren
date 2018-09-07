@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "Product" | trans }} {{ "index" | trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ "Product" | trans }} {{ "index" | trans }}</h1>
+{# display navigation #}
+<div class="navigation">
+    {{ knp_pagination_render(products) }}
+</div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>{{ "Name" | trans  }}</th>
+                <th>{{ "Description" | trans }}</th>
+                <th>{{ "Price" | trans }}</th>
+                <th>{{ "Keywords" | trans }}</th>
+                <th>{{ "State" | trans }}</th>
+                <th>{{ "Datecreated" | trans }}</th>
+                <th>{{ "actions" | trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.keywords }}</td>
+                <td>{{ product.state ? 'Activo' : 'Desactivo' }}</td>
+                <td>{{ product.datecreated ? product.datecreated|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('product_show', {'id': product.id}) }}" class="btn btn-primary">{{ "show" | trans }}</a>
+                    <a href="{{ path('product_edit', {'id': product.id}) }}" class="btn btn-primary">{{ "edit" | trans }}</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">{{ "no records found" | trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('product_new') }}" class="btn btn-primary">{{ "Create new" | trans }}</a>
+{# display navigation #}
+<div class="navigation">
+    {{ knp_pagination_render(products) }}
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{"New"| trans }} {{"DefaultAttribute" | trans }}{% endblock %}
+
+{% block body %}
+
+    <h1>{{ "Create new" | trans }} {{ "DefaultAttribute" | trans }}</h1>
+    {{ include('default_attribute/_form.html.twig') }}
+
+    <a href="{{ path('default_attribute_index') }}">{{ "back to list" | trans }}</a>
+
+{% endblock %}

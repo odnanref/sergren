@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "Edit" | trans }} {{"Media"| trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ "Edit" | trans }} {{ "Media" | trans }}</h1>
+
+    {{ include('media/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('media_index') }}">{{ "back to list" | trans }}</a>
+
+    {{ include('media/_delete_form.html.twig') }}
+{% endblock %}

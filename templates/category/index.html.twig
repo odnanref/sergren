@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "Category" | trans }} {{"index" | trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ "Category" | trans }} {{ "index" | trans }}</h1>
+    
+{# display navigation #}
+<div class="navigation">
+    {{ knp_pagination_render(categories) }}
+</div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>{{ "Name" | trans }}</th>
+                <th>{{ "Description" | trans }}</th>
+                <th>{{ "Keywords" | trans }}</th>
+                <th>{{ "actions" | trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <td>{{ category.id }}</td>
+                <td>{{ category.name }}</td>
+                <td>{{ category.description }}</td>
+                <td>{{ category.keywords }}</td>
+                <td>
+                    <a href="{{ path('category_show', {'id': category.id}) }}" class="btn btn-primary">{{ "show" | trans }}</a>
+                    <a href="{{ path('category_edit', {'id': category.id}) }}" class="btn btn-primary">{{ "edit" | trans }}</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">{{ "no records found" | trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('category_new') }}">{{ "Create new" | trans }}</a>
+    
+    {# display navigation #}
+<div class="navigation">
+    {{ knp_pagination_render(categories) }}
+</div>
+{% endblock %}

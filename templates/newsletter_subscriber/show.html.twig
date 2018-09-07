@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "NewsletterSubscriber" | trans}}{% endblock %}
+
+{% block body %}
+    <h1>{{ "NewsletterSubscriber" | trans }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ newsletter_subscriber.id }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Name" | trans }}</th>
+                <td>{{ newsletter_subscriber.name }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Email" | trans }}</th>
+                <td>{{ newsletter_subscriber.email }}</td>
+            </tr>
+            <tr>
+                <th>{{ "State" | trans }}</th>
+                <td>{{ newsletter_subscriber.state ? 'Ativo' : 'Desativo' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('newsletter_subscriber_index') }}">{{ "back to list" | trans }}</a>
+
+    <a href="{{ path('newsletter_subscriber_edit', {'id': newsletter_subscriber.id}) }}">{{ "edit" | trans }}</a>
+
+    {{ include('newsletter_subscriber/_delete_form.html.twig') }}
+{% endblock %}

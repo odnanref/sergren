@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "ProductAttribute" | trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ "ProductAttribute" | trans }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ product_attribute.id }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Name" | trans }}</th>
+                <td>{{ product_attribute.name }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Value" | trans }}</th>
+                <td>{{ product_attribute.value }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('product_attribute_index') }}" class="btn btn-primary">{{ "back to list" | trans }}</a>
+
+    <a href="{{ path('product_attribute_edit', {'id': product_attribute.id}) }}" class="btn btn-primary">{{ "edit" | trans }}</a>
+
+    {{ include('product_attribute/_delete_form.html.twig') }}
+{% endblock %}

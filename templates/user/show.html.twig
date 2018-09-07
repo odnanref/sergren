@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "User" | trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ "User" | trans }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Username" | trans }}</th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Password" | trans }}</th>
+                <td>{{ user.password }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Email" | trans }}</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>{{ "IsActive" | trans }}</th>
+                <td>{{ user.isActive ? 'Sim' : 'Não' }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Role" | trans }}</th>
+                <td>{{ user.role }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_index') }}" class="btn btn-primary">{{ "back to list" | trans }}</a>
+
+    <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-primary">{{ "edit" | trans }}</a>
+
+    {{ include('user/_delete_form.html.twig') }}
+{% endblock %}
