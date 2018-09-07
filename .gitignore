@@ -1,3 +1,12 @@
+
+###> symfony/framework-bundle ###
+/.env
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###< symfony/web-server-bundle ###
 # Cache and logs (Symfony2)
 /app/cache/*
 /app/logs/*
@@ -46,3 +55,4 @@
 
 # Embedded web-server pid file
 /.web-server-pid
+
