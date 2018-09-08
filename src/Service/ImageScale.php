@@ -21,8 +21,7 @@ class ImageScale
     // TODO - Insert your code here
     public function __construct($image)
     {
-        $upload_folder = __DIR__ . "/../../public/uploads/media/";
-        $this->image = $upload_folder . $image;
+        $this->image = $image;
         $tmp = explode(".", $image);
         if ( count($tmp) <=1 ) {
             throw new \Exception("Unable to see extension in filename");
@@ -31,7 +30,7 @@ class ImageScale
         $extension = $tmp[count($tmp)-1];
         $image_thumb = \str_replace($extension, "_thumb" . $extension, $image);
         
-        $this->imagethumb = $upload_folder . $image_thumb;
+        $this->imagethumb = $image_thumb;
         
     }
     

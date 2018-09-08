@@ -62,20 +62,33 @@ class MediaController extends Controller
                 return $response;
             }
             
-            // moves the file to the directory where brochures are stored
-            $file->move(
-                $this->getParameter('media_directory'),
-                $fileName
-                );
-            
-            // updates the 'brochure' property to store the PDF file name
-            // instead of its contents
-            $medium->setPath($fileName);
-            
             $em = $this->getDoctrine()->getManager();
-            $em->persist($medium);
-            $em->flush();
-
+            
+            try {
+                // moves the file to the directory where brochures are stored
+                $file->move(
+                    $this->getParameter('media_directory'),
+                    $fileName
+                    );
+                
+                // updates the 'brochure' property to store the PDF file name
+                // instead of its contents
+                $medium->setPath($fileName);
+                
+                $em->persist($medium);
+                $em->flush();
+            
+                $imagescale = new \App\Service\ImageScale($this->getParameter("media_directory") . DIRECTORY_SEPARATOR . $fileName);
+                $imagescale->scale();
+                
+            } catch (\Exception $e) {
+                $em->remove($medium);
+                $em->flush();
+                                
+                $response = new Response('Falha a redimensionar imagem para thumbs ' . $e->getMessage(), 500);
+                return $response;
+            }
+            
             return $this->redirectToRoute('media_index');
         }
 
@@ -114,20 +127,32 @@ class MediaController extends Controller
                 return $response;
             }
             
-            // moves the file to the directory where brochures are stored
-            $file->move(
-                $this->getParameter('media_directory'),
-                $fileName
-                );
-            
-            // updates the 'brochure' property to store the PDF file name
-            // instead of its contents
-            $medium->setPath($fileName);
-            
             $em = $this->getDoctrine()->getManager();
-            $em->persist($medium);
-            $em->flush();
             
+            try {
+                // moves the file to the directory where brochures are stored
+                $file->move(
+                    $this->getParameter('media_directory'),
+                    $fileName
+                    );
+                
+                // updates the 'brochure' property to store the PDF file name
+                // instead of its contents
+                $medium->setPath($fileName);
+                
+                $em->persist($medium);
+                $em->flush();
+                
+                $imagescale = new \App\Service\ImageScale($this->getParameter("media_directory") . DIRECTORY_SEPARATOR . $fileName);
+                $imagescale->scale();
+                
+            } catch (\Exception $e) {
+                $em->remove($medium);
+                $em->flush();
+                
+                $response = new Response('Falha a redimensionar imagem para thumbs ' . $e->getMessage(), 500);
+                return $response;
+            }
             return JsonResponse::fromJsonString('{"status": "ok", "message":"Saved", "image": "' . $fileName . '"}', 200);
         }
         

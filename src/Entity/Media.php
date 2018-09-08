@@ -96,4 +96,14 @@ class Media
         return $this;
     }
     
+    function getThumb(): string {
+        $tmp = explode(".", $this->getPath());
+        if ( count($tmp) <=1 ) {
+            throw new \Exception("Unable to see extension in filename");
+        }
+        
+        $extension = $tmp[count($tmp)-1];
+        $image_thumb = \str_replace($extension, "_thumb" . $extension, $image);
+        return $image_thumb;
+    }
 }
