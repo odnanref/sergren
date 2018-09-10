@@ -14,6 +14,7 @@ use App\Entity\ProductAttribute;
 use App\Repository\ProductAttributeRepository;
 use App\Entity\DefaultAttribute;
 use Doctrine\Common\Collections\ArrayCollection;
+use App\Repository\ProductReportViewRepository;
 
 /**
  * @Route("/admin/product")
@@ -121,7 +122,10 @@ class ProductController extends Controller
     /**
      * @Route("/{id}", name="product_show", methods="GET")
      */
-    public function show(Product $product, DefaultAttributeRepository $defaultAttributeRepo, ProductAttributeRepository $paRepo): Response
+    public function show(Product $product, DefaultAttributeRepository $defaultAttributeRepo, 
+        ProductAttributeRepository $paRepo,
+        ProductReportViewRepository $reportRepo
+        ): Response
     {
         $attributes = $defaultAttributeRepo->findAll();
         /** @var \Doctrine\Common\Collections\ArrayCollection $current_attributes */
@@ -153,7 +157,8 @@ class ProductController extends Controller
         return $this->render('product/show.html.twig', [
             'product' => $product, 
             'attributes' => $current_attributes,
-            'media' => $media
+            'media' => $media,
+            'reports' => $reportRepo->findBy(['Product' => $product], ['totalViews' => "DESC"])
         ]);
     }
 

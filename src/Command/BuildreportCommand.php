@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -30,11 +31,19 @@ class BuildreportCommand extends Command
      */
     private $buildReport;
     
-    function __construct(ProductRepository $productRepo, BuildReport $buildReport)
+    /**
+     * 
+     * @var LoggerInterface
+     */
+    private $logger;
+    
+    
+    function __construct(ProductRepository $productRepo, BuildReport $buildReport, LoggerInterface $logger)
     {
-        parent::__construct();
         $this->productRepo = $productRepo;
         $this->buildReport = $buildReport;
+        $this->logger = $logger;
+        parent::__construct();
     }
     
     protected function configure()
@@ -66,6 +75,7 @@ class BuildreportCommand extends Command
             $this->buildReport->build($year, $month, $products[$i]);
         }
         
+        $this->logger->info('Report run for month ' . \date('m') . " and year " . \date("Y") );
         $io->success('Report run for month ' . \date('m') . " and year " . \date("Y") );
     }
 }

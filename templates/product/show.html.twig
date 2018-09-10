@@ -16,6 +16,9 @@
 	<li role="presentation"><a href="#media" role="tab" id="media-tab" data-toggle="tab" aria-controls="media">
 		&nbsp;{{ "Media" | trans }}&nbsp;</a>
 	</li>
+	<li role="presentation"><a href="#report" role="tab" id="report-tab" data-toggle="tab" aria-controls="report">
+		&nbsp;{{ "Reports" | trans }}&nbsp;</a>
+	</li>
 </ul>
 
 <div class="tab-content" id="myTabContent" style="width: 100%;">
@@ -137,6 +140,31 @@
 	 		{% endfor %}
 	 		</div>
 			<br/>
+	 	</div>
+	 	
+	 	<div class="tab-pane fade" role="tabpanel" id="report" aria-labelledby="report-tab"> 
+	 		<h1>{{ "Media" | trans }}</h1>
+	 		
+	 		<div class="row">
+	 		<h3>{{ "ProductReportView" | trans }}</h3>
+    	 		<table class="table">
+    	 			<tr>
+    	 				<th>{{ "Year" | trans }}</th>
+    	 				<th>{{ "Month" | trans }}</th>
+    	 				<th>{{ "totalViews" | trans }}</th>
+    	 				<th>{{ "totalByDisctinctIp" | trans }}</th>
+    	 			</tr>
+    	 			{% for report in reports %}
+    	 			<tr>
+    	 				<td>{{ report.year }}</td>
+    	 				<td>{{ report.month }}</td>
+    	 				<td>{{ report.totalViews }}</td>
+    	 				<td>{{ report.totalByDisctinctIp }}</td>
+    	 			</tr>
+    	 			{% endfor %}
+    	 		</table>
+	 		</div>
+	 		
 	 	</div>
 	 	 
 </div>
