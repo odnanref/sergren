@@ -18,7 +18,7 @@ class ImageScale
      */
     public $imagethumb;
     
-    // TODO - Insert your code here
+    
     public function __construct($image)
     {
         $this->image = $image;
