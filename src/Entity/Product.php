@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\PersistentCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -70,12 +71,24 @@ class Product
      * @ORM\OneToMany(targetEntity="Media", mappedBy="product")
      */
     private $medias;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ProductView", mappedBy="product", orphanRemoval=true)
+     */
+    private $productViews;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ProductReportView", mappedBy="Product")
+     */
+    private $year;
     
     function __construct()
     {
         $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
         $this->medias = new \Doctrine\Common\Collections\ArrayCollection();$collection;
         $this->productAttributes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->productViews = new ArrayCollection();
+        $this->year = new ArrayCollection();
     }
 
     /**
@@ -208,5 +221,67 @@ class Product
     
     function __toString() {
         return $this->getId() . " " . $this->getName();
+    }
+
+    /**
+     * @return Collection|ProductView[]
+     */
+    public function getProductViews(): Collection
+    {
+        return $this->productViews;
+    }
+
+    public function addProductView(ProductView $productView): self
+    {
+        if (!$this->productViews->contains($productView)) {
+            $this->productViews[] = $productView;
+            $productView->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductView(ProductView $productView): self
+    {
+        if ($this->productViews->contains($productView)) {
+            $this->productViews->removeElement($productView);
+            // set the owning side to null (unless already changed)
+            if ($productView->getProduct() === $this) {
+                $productView->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProductReportView[]
+     */
+    public function getYear(): Collection
+    {
+        return $this->year;
+    }
+
+    public function addYear(ProductReportView $year): self
+    {
+        if (!$this->year->contains($year)) {
+            $this->year[] = $year;
+            $year->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeYear(ProductReportView $year): self
+    {
+        if ($this->year->contains($year)) {
+            $this->year->removeElement($year);
+            // set the owning side to null (unless already changed)
+            if ($year->getProduct() === $this) {
+                $year->setProduct(null);
+            }
+        }
+
+        return $this;
     }
 }
