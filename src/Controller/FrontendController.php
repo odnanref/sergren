@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ProductRepository;
+use App\Entity\ProductView;
 
 class FrontendController extends Controller
 {
@@ -28,10 +29,25 @@ class FrontendController extends Controller
      * @Route("/ver/{id}", name="frontend_view_car")
      */
     function viewCar(int $id , ProductRepository $productRepository, CategoryRepository $categoryRepository) {
+        
         $product = $productRepository->getActive($id);
         if (count($product) <= 0 ) {
             throw $this->createNotFoundException("Item não encontrado. $id ");
         }
+        
+        $request = Request::createFromGlobals();
+        $headers = $request->headers->all();
+        
+        // product view saves access to a product
+        $productview = new ProductView();
+        $productview->setIpaddress($request->getClientIp());
+        $productview->setProduct($product[0]);
+        $productview->setUseragent($headers['user-agent'][0]);
+        $productview->setReferer($headers['referer'][0]);
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($productview);
+        $em->flush();
         
         return $this->render('frontend/view_car.html.twig', [
             'categories' => $categoryRepository->findAll(),

@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{"ProductReportView" | trans}}{% endblock %}
+
+{% block body %}
+ <h1>{{ "ProductReportView" | trans }} {{ "index" | trans }}</h1>
+{# display navigation #}
+<div class="navigation">
+    {{ knp_pagination_render(reports) }}
+</div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>{{ "Year" | trans  }}</th>
+                <th>{{ "Month" | trans }}</th>
+                <th>{{ "totalViews" | trans }}</th>
+                <th>{{ "totalByDisctinctIp" | trans }}</th>
+                <th>{{ "Product" | trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for report in reports %}
+            <tr>
+                <td>{{ report.id }}</td>
+                <td>{{ report.year }}</td>
+                <td>{{ report.month }}</td>
+                <td>{{ report.totalViews }}</td>
+                <td>{{ report.totalByDisctinctIp }}</td>
+                <td>{{ report.product.name }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">{{ "no records found" | trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{# display navigation #}
+<div class="navigation">
+    {{ knp_pagination_render(reports) }}
+</div>
+{% endblock %}
