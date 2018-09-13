@@ -20,7 +20,7 @@
               <div class="carousel-caption text-left">
                 <h1>{{ item.name }}</h1>
                 <p>{{ item.description }}</p>
-                <p><a class="btn btn-lg btn-primary" href="{{ path("frontend_view_car", { id: item.id }) }}" role="button">{{ "show" | trans }}</a></p>
+                <p><a class="btn btn-lg btn-primary" href="{{ path("frontend_view_car_exibir", { url: item.url }) }}" role="button">{{ "show" | trans }}</a></p>
               </div>
             </div>
           </div>
