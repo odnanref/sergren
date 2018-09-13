@@ -103,7 +103,7 @@ class Media
         }
         
         $extension = $tmp[count($tmp)-1];
-        $image_thumb = \str_replace($extension, "_thumb" . $extension, $image);
+        $image_thumb = \str_replace($extension, "_thumb" . $extension, $this->getPath());
         return $image_thumb;
     }
 }
