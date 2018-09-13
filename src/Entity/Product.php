@@ -303,6 +303,9 @@ class Product
     
     public function setUrl(?string $url): self
     {
+        if (trim($url) == "") {
+            $url = $this->getName();
+        }
         $this->url = strtolower(trim(str_replace(" ", "-", $url)));
         
         return $this;

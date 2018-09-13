@@ -7,11 +7,14 @@
         <title>{{ "Company" | trans }} {% block title %}{% endblock %}</title>
         
         {% block metadata %}
+        <meta name="keywords" content=""/>
+		<meta name="description" content="{{ "Company" | trans }} Compra e Venda" />
+        
         <meta property="og:title" content="{{ "Company" | trans }}" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="{{app.request.uri}}" />
-        <meta property="og:description" content="{{ "Company" | trans }}Compra e Venda" />
-        <meta property="og:image" content="{{app.request.uri}}{{ asset('img/logo.jpeg') }}" />
+        <meta property="og:description" content="{{ "Company" | trans }} Compra e Venda" />
+        <meta property="og:image" content="{{app.request.schemeAndHttpHost }}{{ asset('img/logo.jpeg') }}" />
 
         {% endblock %}
         
@@ -48,7 +51,7 @@
               <a class="nav-link" href="#">{{ "Want to sell" | trans }}</a>
             </li>
           </ul>
-          <form class="form-inline mt-2 mt-md-0" action="{{ path("frontend_view_search") }}" method="POST">
+          <form class="form-inline mt-2 mt-md-0" action="{{ path("frontend_view_search") }}" method="GET">
             <input class="form-control mr-sm-2" name="searchtext" type="text" placeholder="{{ "Search" | trans }}" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">{{ "Search" | trans }}</button>
           </form>
@@ -63,7 +66,8 @@
         <!-- FOOTER -->
       <footer class="container">
         <p class="float-right"><a href="#">{{ "Back to top" | trans }}</a></p>
-        <p>&copy; 2017-2018 {{ "Company" | trans }} &middot; <a href="#">{{ "Privacy" | trans }}</a> &middot; <a href="#">{{ "Terms" | trans }}</a></p>
+        <p>&copy; 2017-2018 {{ "Company" | trans }} &middot; <a href="{{ path("frontend_view_page_name", {name: "privacy"}) }}">{{ "Privacy" | trans }}</a> &middot; 
+        <a href="{{ path("frontend_view_page_name", {name: "terms-of-service"}) }}">{{ "Terms" | trans }}</a></p>
       </footer>
     </main>
     

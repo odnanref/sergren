@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
+use App\Repository\PageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -109,36 +110,17 @@ class FrontendController extends Controller
             'products' => $categoryRepository->getActiveProducts($id)
         ]);
     }
-    
-    /**
-     * @Route("/search", name="frontend_view_search_get", methods="GET")
-     */
-    public function indexGetSearch(ProductRepository $productRepository, CategoryRepository $categoryRepository)
-    {
-        $request = Request::createFromGlobals();
-        $paginator  = $this->get('knp_paginator');
         
-        $pagination = $paginator->paginate(
-            [], /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
-            20/*limit per page*/
-            );
-        
-        return $this->render('frontend/index_search.html.twig', [
-            'categories' => $categoryRepository->findAll(),
-            'products' => $pagination
-        ]);
-    }
-    
     /**
-     * @Route("/search", name="frontend_view_search", methods="POST")
+     * @Route("/search", name="frontend_view_search", methods="GET")
      */
     public function indexSearch(ProductRepository $productRepository, CategoryRepository $categoryRepository)
     {
         $request = Request::createFromGlobals();
         $paginator  = $this->get('knp_paginator');
         
-        $product = $request->request->get("searchtext");
+        //$product = $request->request->get("searchtext");
+        $product = $request->query->get("searchtext");
         
         $pagination = $paginator->paginate(
             $productRepository->search($product), /* query NOT result */
@@ -146,9 +128,34 @@ class FrontendController extends Controller
             20/*limit per page*/
             );
         
+        $keywords = "";
+        if (count($pagination) > 0 ) {
+            for ($i = 0 ; $i < count($pagination); $i++) {
+                $keywords .= " " . $pagination[$i]->getName() . " " .$pagination[$i]->getKeywords();
+            }
+        }
+        
         return $this->render('frontend/index_search.html.twig', [
             'categories' => $categoryRepository->findAll(),
-            'products' => $pagination
+            'products' => $pagination,
+            'search' => $product,
+            'keywords' => $keywords
+        ]);
+    }
+    
+    /**
+     * @Route("/page/{name}", name="frontend_view_page_name")
+     */
+    function viewPageByName(string $name , PageRepository $pageRepository, CategoryRepository $categoryRepository) {
+        
+        $page = $pageRepository->getActiveByUrl($name);
+        if (count($page) <= 0 ) {
+            throw $this->createNotFoundException("Item não encontrado. $name ");
+        }
+        
+        return $this->render('frontend/view_page.html.twig', [
+            'categories' => $categoryRepository->findAll(),
+            'page' => $page[0]
         ]);
     }
 }

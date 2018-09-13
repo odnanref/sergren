@@ -3,9 +3,12 @@
 {% block title %} {{ product.name }} {% endblock %}
 
 {% block metadata %}
+<meta name="keywords" content="{{ product.keywords }} {{ product.name }}"/>
+<meta name="description" content="{{ product.description }}" />
+
 <meta property="og:title" content="{{ product.name }} {{ "Company" | trans }}" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="{{app.request.uri}}{{ path("frontend_view_car", {id: product.id}) }}" />
+<meta property="og:url" content="{{app.request.uri}}" />
 <meta property="og:description" content="{{ product.description }}" />
 
 {% if product.medias|length > 0 %}
@@ -14,7 +17,7 @@
 	{% set imagelocation = "none.jpeg" %}
 {% endif %}
 
-<meta property="og:image" content="{{app.request.uri}}{{ asset('uploads/media/' ~ imagelocation) }}" />
+<meta property="og:image" content="{{app.request.schemeAndHttpHost}}{{ asset('uploads/media/' ~ imagelocation) }}" />
 
 {% endblock %}
 

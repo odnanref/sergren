@@ -2,8 +2,34 @@
 
 {% block title %}{{ "Search" | trans }} {{ "Product" | trans }}{% endblock %}
 
+{% block metadata %}
+<meta name="keywords" content="{{ keywords }}"/>
+<meta name="description" content="{{ search }}" />
+
+<meta property="og:title" content="{{ "Search" | trans }} {{ search }} {{ "Company" | trans }}" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{app.request.uri}}" />
+<meta property="og:description" content="{{ "Search" | trans }} {{ search }}" />
+
+{% for product in products %}
+    {% if product.medias|length > 0 %}
+    	{% set imagelocation = product.medias[0].path %}
+    {% else %}
+    	{% set imagelocation = "none.jpeg" %}
+    {% endif %}
+    <meta property="og:image" content="{{app.request.schemeAndHttpHost}}{{ asset('uploads/media/' ~ imagelocation) }}" />
+{% endfor %}
+
+{% endblock %}
+
+
 {% block body %}
     <h1>{{ "Product" | trans }}</h1>
+    <p>
+    <label for="pesquisa-feita">{{ "Search" | trans }}</label>
+    &nbsp;<span id="pesquisa-feita">{{ search }}</span>
+    </p>
+    
 {# display navigation #}
 <div class="navigation">
     {{ knp_pagination_render(products) }}
