@@ -42,8 +42,48 @@ class FrontendController extends Controller
         $productview = new ProductView();
         $productview->setIpaddress($request->getClientIp());
         $productview->setProduct($product[0]);
-        $productview->setUseragent($headers['user-agent'][0]);
-        $productview->setReferer($headers['referer'][0]);
+        if (array_key_exists("user-agent", $headers)) {
+            $productview->setUseragent($headers['user-agent'][0]);
+        }
+        
+        if (array_key_exists("referer", $headers)) {
+            $productview->setReferer($headers['referer'][0]);
+        }
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($productview);
+        $em->flush();
+        
+        return $this->render('frontend/view_car.html.twig', [
+            'categories' => $categoryRepository->findAll(),
+            'product' => $product[0]
+        ]);
+    }
+    
+    /**
+     * @Route("/exibir/{url}", name="frontend_view_car_exibir")
+     */
+    function viewCarByUrl(string $url , ProductRepository $productRepository, CategoryRepository $categoryRepository) {
+        
+        $product = $productRepository->getActiveByUrl($url);
+        if (count($product) <= 0 ) {
+            throw $this->createNotFoundException("Item não encontrado. $url ");
+        }
+        
+        $request = Request::createFromGlobals();
+        $headers = $request->headers->all();
+        
+        // product view saves access to a product
+        $productview = new ProductView();
+        $productview->setIpaddress($request->getClientIp());
+        $productview->setProduct($product[0]);
+        if (array_key_exists("user-agent", $headers)) {
+            $productview->setUseragent($headers['user-agent'][0]);
+        }
+        
+        if (array_key_exists("referer", $headers)) {
+            $productview->setReferer($headers['referer'][0]);
+        }
         
         $em = $this->getDoctrine()->getManager();
         $em->persist($productview);

@@ -8,9 +8,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\PersistentCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\EntityManager;
+use phpDocumentor\Reflection\Types\Null_;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Product
 {
@@ -40,6 +42,11 @@ class Product
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $keywords;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true, unique=true)
+     */
+    private $url;
 
     /**
      * @ORM\Column(type="boolean")
@@ -283,5 +290,29 @@ class Product
         }
 
         return $this;
+    }
+    
+    public function getUrl(): string
+    {
+        if ($this->url !== null) {
+            return $this->url;
+        } else {
+            return $this->url = strtolower(trim(str_replace(" ", "-", $this->getName())));   
+        }
+    }
+    
+    public function setUrl(?string $url): self
+    {
+        $this->url = strtolower(trim(str_replace(" ", "-", $url)));
+        
+        return $this;
+    }
+    
+    /**
+     * @ORM\PrePersist
+     */
+    public function doStuffOnPrePersist()
+    {
+        $this->url = $this->getUrl();
     }
 }

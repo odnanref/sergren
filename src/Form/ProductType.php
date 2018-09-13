@@ -21,6 +21,7 @@ class ProductType extends AbstractType
             ->add('state')
             ->add('datecreated', DateTimeType::class, ['data' => new \DateTime()])
             ->add('categories')
+            ->add('url')
         ;
     }
 

@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Translation\TranslatorInterface;
 use App\Repository\DefaultAttributeRepository;
 use App\Entity\ProductAttribute;
 use App\Repository\ProductAttributeRepository;
@@ -77,11 +78,20 @@ class ProductController extends Controller
     /**
      * @Route("/new", name="product_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, TranslatorInterface $translator, ProductRepository $prodRepo): Response
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
+        
+        if ($prodRepo->existsUrl($product->getUrl())) {
+            $this->addFlash("error", $translator->trans("Already exists Url"));
+            
+            return $this->render('product/new.html.twig', [
+                'product' => $product,
+                'form' => $form->createView(),
+            ]);
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -93,9 +103,20 @@ class ProductController extends Controller
             $em->persist($product);
             $em->persist($cat);
             $em->flush();
+            
+            $this->addFlash("success", $translator->trans("Success saving") . ".");
 
             return $this->redirectToRoute('product_index');
+            
+        } elseif ( $form->isSubmitted() && !$form->isValid()) {
+            $errors = "";
+            /** @var \Symfony\Component\Form\FormError $error */
+            foreach ($form->getErrors() as $error ) {
+                $errors .= $error->getMessage() . PHP_EOL;
+            }
+            $this->addFlash("error", $translator->trans("Error saving") . $errors);
         }
+        
 
         return $this->render('product/new.html.twig', [
             'product' => $product,
@@ -165,11 +186,19 @@ class ProductController extends Controller
     /**
      * @Route("/{id}/edit", name="product_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Product $product): Response
+    public function edit(Request $request, Product $product, TranslatorInterface $translator, ProductRepository $prodRepo): Response
     {
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
-
+        
+        if ($prodRepo->existsUrl($product->getUrl(), $product->getId())) {
+            $this->addFlash("error", $translator->trans("Already exists Url"));
+            return $this->render('product/edit.html.twig', [
+                'product' => $product,
+                'form' => $form->createView(),
+            ]);
+        }
+        
         if ($form->isSubmitted() && $form->isValid()) {
             foreach ($product->getCategories() as $cat ){
                if (!$cat->getProducts()->contains($product)) {
@@ -178,7 +207,17 @@ class ProductController extends Controller
             }
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash("success", $translator->trans("Success saving") . ".");
+            
             return $this->redirectToRoute('product_edit', ['id' => $product->getId()]);
+            
+        } elseif ( $form->isSubmitted() && !$form->isValid()) {
+            $errors = "";
+            /** @var \Symfony\Component\Form\FormError $error */
+            foreach ($form->getErrors() as $error ) {
+                $errors .= $error->getMessage() . PHP_EOL;
+            }
+            $this->addFlash("error", $translator->trans("Error saving") . $errors);
         }
 
         return $this->render('product/edit.html.twig', [
@@ -190,12 +229,13 @@ class ProductController extends Controller
     /**
      * @Route("/{id}", name="product_delete", methods="DELETE")
      */
-    public function delete(Request $request, Product $product): Response
+    public function delete(Request $request, Product $product, TranslatorInterface $translator ): Response
     {
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($product);
             $em->flush();
+            $this->addFlash("success", $translator->trans("Success saving") . ".");
         }
 
         return $this->redirectToRoute('product_index');
