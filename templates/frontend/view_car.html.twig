@@ -62,7 +62,7 @@
 <div class="row">
     {% for media in product.medias %}
     <div class="col">
-    	<img class="mr-3" src="{{ asset('uploads/media/' ~ media.path) }}" alt="{{ media.name }} {{ media.description }}" style="width: 120px;" onClick="display('{{ media.path }}');"/>
+    	<img class="mr-3" src="{{ asset('uploads/media/' ~ media.thumb) }}" alt="{{ media.name }} {{ media.description }}" style="width: 120px;" onClick="display('{{ media.path }}');"/>
 	</div>
     {% endfor %}
 </div>
