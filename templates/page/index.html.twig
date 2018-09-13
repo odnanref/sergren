@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "Page" | trans }} {{"index" | trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ "Page" | trans }} {{"index" | trans }}</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>{{ "Name" | trans }}</th>
+                <th>{{ "Description" | trans }}</th>
+                <th>{{ "Keywords" | trans }}</th>
+                <th>{{ "Body" | trans }}</th>
+                <th>{{ "Url" | trans }}</th>
+                <th>{{ "actions" | trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for page in pages %}
+            <tr>
+                <td>{{ page.id }}</td>
+                <td>{{ page.name }}</td>
+                <td>{{ page.description }}</td>
+                <td>{{ page.keywords }}</td>
+                <td>{{ page.body }}</td>
+                <td>{{ page.url }}</td>
+                <td>
+                    <a href="{{ path('page_show', {'id': page.id}) }}">{{ "show" | trans }}</a>
+                    <a href="{{ path('page_edit', {'id': page.id}) }}">{{ "edit" | trans }}</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">{{ "no records found" | trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('page_new') }}" class="btn btn-primary">{{ "Create new" | trans }}</a>
+{% endblock %}
