@@ -89,6 +89,7 @@
 
 <script type="text/Javascript">
 function display(image) {
+	image = image.replace("_thumb", "");
 	var http_url = '{{ asset('uploads/media/' ~ 'IMAGELOCATION') }}';
 	http_url = http_url.replace('IMAGELOCATION', image);
 	var elem = document.getElementById("mainimage");
