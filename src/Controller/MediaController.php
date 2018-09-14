@@ -78,7 +78,7 @@ class MediaController extends Controller
                 $em->persist($medium);
                 $em->flush();
             
-                $imagescale = new \App\Service\ImageScale($this->getParameter("media_directory") . DIRECTORY_SEPARATOR . $fileName);
+                $imagescale = new \App\Service\ImageScale($medium, $this->getParameter("media_directory") . DIRECTORY_SEPARATOR );
                 $imagescale->scale();
                 
             } catch (\Exception $e) {
@@ -143,7 +143,7 @@ class MediaController extends Controller
                 $em->persist($medium);
                 $em->flush();
                 
-                $imagescale = new \App\Service\ImageScale($this->getParameter("media_directory") . DIRECTORY_SEPARATOR . $fileName);
+                $imagescale = new \App\Service\ImageScale($medium, $this->getParameter("media_directory") . DIRECTORY_SEPARATOR);
                 $imagescale->scale();
                 
             } catch (\Exception $e) {

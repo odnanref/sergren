@@ -84,6 +84,11 @@ class Media
         return $this;
     }
 
+    /**
+     * This is actually the filename not the full path
+     * 
+     * @return string|NULL
+     */
     public function getPath(): ?string
     {
         return $this->path;

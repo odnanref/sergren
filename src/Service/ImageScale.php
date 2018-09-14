@@ -1,6 +1,8 @@
 <?php
 namespace App\Service;
 
+use App\Entity\Media;
+
 class ImageScale
 {
 
@@ -18,19 +20,19 @@ class ImageScale
      */
     public $imagethumb;
     
-    
-    public function __construct($image)
+    /**
+     * Prep for image scale
+     * 
+     * directory can be empty if in the same location of the image
+     * 
+     * @param Media $image
+     * @param string $directory
+     */
+    public function __construct(Media $image, $directory = "")
     {
-        $this->image = $image;
-        $tmp = explode(".", $image);
-        if ( count($tmp) <=1 ) {
-            throw new \Exception("Unable to see extension in filename");
-        }
+        $this->image = $directory . $image->getPath();
         
-        $extension = $tmp[count($tmp)-1];
-        $image_thumb = \str_replace("." . $extension, "_thumb." . $extension, $image);
-        
-        $this->imagethumb = $image_thumb;
+        $this->imagethumb = $directory . $image->getThumb();
         
     }
     
