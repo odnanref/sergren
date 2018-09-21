@@ -23,8 +23,8 @@
     </table>
 
     <a href="{{ path('product_attribute_index') }}" class="btn btn-primary">{{ "back to list" | trans }}</a>
-
+<div class="col-sm-1 col-xs-1 col-md-1 col-lg-1"></div> 
     <a href="{{ path('product_attribute_edit', {'id': product_attribute.id}) }}" class="btn btn-primary">{{ "edit" | trans }}</a>
-
+<div class="col-sm-1 col-xs-1 col-md-1 col-lg-1"></div> 
     {{ include('product_attribute/_delete_form.html.twig') }}
 {% endblock %}

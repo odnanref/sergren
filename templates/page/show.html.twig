@@ -34,16 +34,13 @@
         </tbody>
     </table>
 
-<ul class="nav nav-pills">
 
-<li role="presentation">
     <a href="{{ path('page_index') }}" class="btn">{{ "back to list" | trans }}</a>
-    </li>
-<li role="presentation">
+
+<div class="col-sm-1 col-xs-1 col-md-1 col-lg-1"></div> 
+
     <a href="{{ path('page_edit', {'id': page.id}) }}" class="btn">{{ "edit" | trans }}</a>
-    </li>
-<li role="presentation">
+<div class="col-sm-1 col-xs-1 col-md-1 col-lg-1"></div> 
+
     {{ include('page/_delete_form.html.twig') }}
-    </li>
-</ul>
 {% endblock %}

@@ -174,17 +174,15 @@
 </div>
  
 
-	<ul class="nav nav-pills">
-	<li role="presentation">
-		<a href="{{ path('product_index') }}" class="btn">{{ "back to list" | trans }}</a>&nbsp;&nbsp;
-	</li>
-	<li role="presentation">
-		<a href="{{ path('product_edit', {'id': product.id}) }}" class="btn">{{ "edit" | trans }}</a>&nbsp;&nbsp;
-	</li>
-	<li role="presentation">
+		<a href="{{ path('product_index') }}" class="btn btn-primary">{{ "back to list" | trans }}</a>
+		
+		<div class="col-sm-1 col-xs-1 col-md-1 col-lg-1"></div> 
+		
+		<a href="{{ path('product_edit', {'id': product.id}) }}" class="btn btn-primary">{{ "edit" | trans }}</a>
+		
+		<div class="col-sm-1 col-xs-1 col-md-1 col-lg-1"></div> 
+		
 	{{ include('product/_delete_form.html.twig') }}&nbsp;&nbsp;
-	</li>
-    </ul>  
     
     <script type="text/Javascript">
     

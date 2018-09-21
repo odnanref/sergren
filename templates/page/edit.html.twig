@@ -6,8 +6,9 @@
     <h1>{{ "Edit" | trans }} {{ "Page" | trans }}</h1>
 
     {{ include('page/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('page_index') }}">{{ "back to list" | trans }}</a>
-
+    
+<div class="col-sm-1 col-xs-1 col-md-1 col-lg-1"></div> 
+    <a href="{{ path('page_index') }}" class="btn btn-primary">{{ "back to list" | trans }}</a>
+<div class="col-sm-1 col-xs-1 col-md-1 col-lg-1"></div> 
     {{ include('page/_delete_form.html.twig') }}
 {% endblock %}

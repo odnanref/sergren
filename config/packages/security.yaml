@@ -44,12 +44,13 @@ security:
             http_basic: ~
             provider: our_db_provider
             logout:
-                path:   /logout
-                target: /
+               path:   /logout
+               target: /
+            
         main:
             pattern:    ^/
             anonymous: true
-            
+                    
     access_control:
           - { path: ^/admin/user, roles: ROLE_ADMIN }
           - { path: ^/admin, roles: [ROLE_USER,ROLE_ADMIN] }

@@ -10,11 +10,8 @@
             <tr>
                 <th>Id</th>
                 <th>{{ "Name" | trans }}</th>
-                <th>{{ "Description" | trans }}</th>
                 <th>{{ "Keywords" | trans }}</th>
-                <th>{{ "Body" | trans }}</th>
                 <th>{{ "Url" | trans }}</th>
-                <th>{{ "actions" | trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -22,14 +19,18 @@
             <tr>
                 <td>{{ page.id }}</td>
                 <td>{{ page.name }}</td>
-                <td>{{ page.description }}</td>
                 <td>{{ page.keywords }}</td>
-                <td>{{ page.body }}</td>
                 <td>{{ page.url }}</td>
-                <td>
-                    <a href="{{ path('page_show', {'id': page.id}) }}">{{ "show" | trans }}</a>
-                    <a href="{{ path('page_edit', {'id': page.id}) }}">{{ "edit" | trans }}</a>
+              
+            </tr>
+            <tr>
+            	<td>
+                    <a href="{{ path('page_show', {'id': page.id}) }}" class="btn btn-primary mr-1">{{ "show" | trans }}</a>
                 </td>
+                <td>
+                    <a href="{{ path('page_edit', {'id': page.id}) }}" class="btn btn-primary">{{ "edit" | trans }}</a>
+                </td>
+                <td colspan="5">&nbsp;</td>
             </tr>
         {% else %}
             <tr>

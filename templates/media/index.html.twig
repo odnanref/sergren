@@ -26,9 +26,13 @@
                 <td>{{ medium.name }}</td>
                 <td>{{ medium.description }}</td>
                 <td>{{ medium.path }}</td>
-                <td>
+                
+            </tr>
+            <tr>
+            	<td>
                     <a href="{{ path('media_show', {'id': medium.id}) }}" class="btn btn-primary">{{ "show" | trans }}</a>
                 </td>
+                <td colspan="7"></td>
             </tr>
         {% else %}
             <tr>

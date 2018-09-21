@@ -5,15 +5,10 @@
 {% block body %}
     <h1>{{ "Edit" | trans }} {{"DefaultAttribute" | trans }}</h1>
     
-<ul class="nav nav-pills">
-<li role="presentation">
     {{ include('default_attribute/_form.html.twig', {'button_label': 'Update'}) }}
-</li>
-<li role="presentation">
+    <div class="col-sm-1 col-xs-1 col-md-1 col-lg-1"></div> 
     <a href="{{ path('default_attribute_index') }}" class="btn btn-primary">{{ "back to list" | trans }}</a>
-</li>
-<li role="presentation">
+    <div class="col-sm-1 col-xs-1 col-md-1 col-lg-1"></div> 
     {{ include('default_attribute/_delete_form.html.twig') }}
-</li>    
-</ul>
-{% endblock %}
+<div class="col-sm-1 col-xs-1 col-md-1 col-lg-1"></div> 
+    {% endblock %}
