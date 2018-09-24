@@ -6,17 +6,20 @@
 <script type="text/Javascript">
 	var myattributes = new Array();
 </script>
+
+<div class="content">
+
 <ul class="nav nav-tabs" id="myTabs" role="tablist">
-	<li role="presentation" class="active"><a href="#home" id="product-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">
+	<li role="presentation" class="active"><a href="#home" id="product-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true" class="btn btn-primary">
 		&nbsp;{{ "Product" | trans }}&nbsp;</a>
 	</li> 
-	<li role="presentation"><a href="#productattribute" role="tab" id="productattribute-tab" data-toggle="tab" aria-controls="productattribute">
+	<li role="presentation"><a href="#productattribute" role="tab" id="productattribute-tab" data-toggle="tab" aria-controls="productattribute" class="btn btn-primary">
 		&nbsp;{{ "ProductAttribute" | trans }}&nbsp;</a>
 	</li>
-	<li role="presentation"><a href="#media" role="tab" id="media-tab" data-toggle="tab" aria-controls="media">
+	<li role="presentation"><a href="#media" role="tab" id="media-tab" data-toggle="tab" aria-controls="media" class="btn btn-primary">
 		&nbsp;{{ "Media" | trans }}&nbsp;</a>
 	</li>
-	<li role="presentation"><a href="#report" role="tab" id="report-tab" data-toggle="tab" aria-controls="report">
+	<li role="presentation"><a href="#report" role="tab" id="report-tab" data-toggle="tab" aria-controls="report" class="btn btn-primary">
 		&nbsp;{{ "Reports" | trans }}&nbsp;</a>
 	</li>
 </ul>
@@ -183,7 +186,9 @@
 		<div class="col-sm-1 col-xs-1 col-md-1 col-lg-1"></div> 
 		
 	{{ include('product/_delete_form.html.twig') }}&nbsp;&nbsp;
-    
+
+</div>
+  
     <script type="text/Javascript">
     
     	$('#myTabs a').click(function (e) {

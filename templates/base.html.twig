@@ -43,8 +43,8 @@
 */
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
-
 body {
+	padding-top: 70px;
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
 }
@@ -112,8 +112,7 @@ ul ul a {
     </head>
     <body>
     
-    <header>
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <nav class="navbar navbar-dark fixed-top bg-dark">
         <a class="navbar-brand" href="{{ path("frontend") }}">{{ "Company" | trans }}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -170,9 +169,8 @@ ul ul a {
           </ul>
         </div>
       </nav>
-    </header>
     
-    
+<div class="content-fluid">
     {# pass a string argument to get only the messages of that type #}
 {% for message in app.flashes('success') %}
     <div class="alert alert-notice" role="alert">
@@ -193,7 +191,7 @@ ul ul a {
      	<main role="main">
         {% block body %}{% endblock %}  
         </main>
-
+</div>
         {% block javascripts %}
         {% endblock %}
         
