@@ -112,33 +112,55 @@
 	 	</div>
 	 	
 	 	<div class="tab-pane fade" role="tabpanel" id="media" aria-labelledby="media-tab"> 
+	 		<div class="content">
 	 		<h1>{{ "Media" | trans }}</h1>
 	 		
 	 		<div class="row">
-	 		<h3>{{ "Create new" | trans }} {{ "Media" | trans }}</h3>
-    	 		<div>
+	 			<div class="col">
+	 				<h3>{{ "Create new" | trans }} {{ "Media" | trans }}</h3>
+	 			</div>
+	 		</div>
+	 		<div class="row">
+	 			<div class="col">
     	 		<form id="uploadmedia">
+    	 		<table class="table">
+    	 		
+    	 		<tr><td>
     	 		<label for="name">{{ "Name" | trans }}</label>
+    	 		</td>
+    	 		<td>
         	 		<input id="media_name" name="media[name]" type="text" />
-    	 		</div>
-    	 		<div>
-    	 		<label for="media_description">{{ "Description" | trans }}</label>
+    	 		</td>
+    	 		</tr>
+    	 		<tr>
+    	 			<td>
+    	 			<label for="media_description">{{ "Description" | trans }}</label>
+        	 		</td>
+        	 		<td>
         	 		<input id="media_description" name="media[description]" type="text" />
-    	 		</div>
-    	 		<div>
-        	 		<label for="media_arquivo">{{ "File" | trans }}</label>
-        	 		<input id="media_arquivo" name="media[path]"  type="file" />
-    	 		</div>
-    	 		<input id="media_product" name="media[product]"  type="hidden" value="{{ product.id }}" />
-    	 		
-    	 		<input type="submit" class="btn btn-primary" value="{{ "Save" | trans }}"/>
-    	 		
+        	 		</td>
+    	 		</tr>
+    	 		<tr>
+        	 		<td><label for="media_arquivo">{{ "File" | trans }}</label></td>
+        	 		
+        	 		<td><input id="media_arquivo" name="media[path]"  type="file" /></td>
+    	 		</tr>
+    	 		<tr>
+    	 			<td colspan="2">
+        	 		<input id="media_product" name="media[product]"  type="hidden" value="{{ product.id }}" />
+        	 		
+        	 		<input type="submit" class="btn btn-primary" value="{{ "Save" | trans }}"/>
+        	 		&nbsp;&nbsp;
+        	 		<button class="btn btn-primary" onClick="clearMediaFields();">{{ "New" | trans }}</button>
+    	 			</td>
+    	 		</tr>
+    	 		</table>
     	 		</form>
-    	 		
-    	 		<button class="btn btn-primary" onClick="clearMediaFields();">{{ "New" | trans }}</button>
+    	 			</div>
+    	 		</div>
 	 		</div>
 	 		
-	 		<div class="row" id="displaywindow">
+	 		<div class="row" id="displaywindow" class="col px-3">
 	 		{%for medium in media %}
 	 		<div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
                 <img src="{{ asset('uploads/media/' ~ medium.path) }}" class="img-responsive" width="120" height="120" />
