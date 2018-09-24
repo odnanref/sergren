@@ -111,38 +111,16 @@ ul ul a {
 
     </head>
     <body>
-    <header>
-    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+    
+    <nav class="navbar navbar-dark navbar-fixed-top navbar-expand-md bg-dark flex-md-nowrap p-0">
+    	<a id="sidebarCollapse" class="btn btn-info">
+        	<span>{{ "Menu" | trans }}</span>
+        </a>
+    	<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/admin/product/">{{ "Company" | trans }}</a>
     	
-    	<ul class="navbar">
-    		<li class="nav-item">
-    			<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/admin/product/">{{ "Company" | trans }}</a>
-    		</li>
-              <li class="nav-item">
-                  <a id="sidebarCollapse" class="btn btn-info">
-                    <span>{{ "Menu" | trans }}</span>
-                  </a>
-              </li>
-          </ul>
-      
-      <form class="form-inline mt-2 mt-md-0" action="{{ path("product_index_search") }}" method="POST">
-      	<div style="width: 50%;">
-      	<input style="width: 100%;" class="form-control form-control-dark w-100" name="searchtext" type="text" placeholder="{{ "Search" | trans }}" aria-label="{{ "Search" | trans }}">
-      	</div>
-      	<div>
-      	<button class="btn btn-outline-success my-2 my-sm-0" type="submit">{{ "Search" | trans }}</button>
-      	</div>
-      </form>
-      
-      <ul class="navbar-nav px-3">
-      	<li class="nav-item text-nowrap">
-      		
-      	</li>
-        <li class="nav-item text-nowrap">
-        </li>
-      </ul>
     </nav>
-    </header>
+    
+    
     {# pass a string argument to get only the messages of that type #}
 {% for message in app.flashes('success') %}
     <div class="alert alert-notice" role="alert">
@@ -265,8 +243,8 @@ ul ul a {
         {% block body %}{% endblock %}  
         </main>
     </div>    
-</div>    
-        
+
+</div>
         {% block javascripts %}
         
         <script type="text/Javascript">
