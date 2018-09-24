@@ -111,70 +111,19 @@ ul ul a {
 
     </head>
     <body>
+    
     <header>
-    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-    	
-    	<ul class="navbar">
-    		<li class="nav-item">
-    			<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/admin/product/">{{ "Company" | trans }}</a>
-    		</li>
-              <li class="nav-item">
-                  <a id="sidebarCollapse" class="btn btn-info">
-                    <span>{{ "Menu" | trans }}</span>
-                  </a>
-              </li>
-          </ul>
-      
-      <form class="form-inline mt-2 mt-md-0" action="{{ path("product_index_search") }}" method="POST">
-      	<div style="width: 50%;">
-      	<input style="width: 100%;" class="form-control form-control-dark w-100" name="searchtext" type="text" placeholder="{{ "Search" | trans }}" aria-label="{{ "Search" | trans }}">
-      	</div>
-      	<div>
-      	<button class="btn btn-outline-success my-2 my-sm-0" type="submit">{{ "Search" | trans }}</button>
-      	</div>
-      </form>
-      
-      <ul class="navbar-nav px-3">
-      	<li class="nav-item text-nowrap">
-      		
-      	</li>
-        <li class="nav-item text-nowrap">
-        </li>
-      </ul>
-    </nav>
-    </header>
-    {# pass a string argument to get only the messages of that type #}
-{% for message in app.flashes('success') %}
-    <div class="alert alert-notice" role="alert">
-        {{ message }}
-    </div>
-{% endfor %}
-
-{# pass an array argument to get the messages of those types  #}
-{% for label, messages in app.flashes(['warning', 'error']) %}
-    {% for message in messages %}
-        <div class="alert alert-{{ label }}" role="alert">
-            {{ message }}
-        </div>
-    {% endfor %}
-{% endfor %}
-<div class="wrapper">
-	
-       <nav id="sidebar">
-            <ul class="list-unstyled components">
-              <li class="nav-item">
-                <a class="nav-link active" href="#">
-                  <span data-feather="home"></span>
-                  {{ "Dashboard" | trans }} <span class="sr-only">(current)</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file"></span>
-                  {{ "Orders" | trans }}
-                </a>
-              </li>
-              <li class="nav-item">
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="{{ path("frontend") }}">{{ "Company" | trans }}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{{ path("product_index") }}">{{ "Home" | trans }}<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{{ path("page_index") }}">
                   <span data-feather="file"></span>
                   {{ "Page" | trans }}
@@ -217,70 +166,35 @@ ul ul a {
                   {{ "Reports" | trans }}
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="layers"></span>
-                  {{ "Integrations" | trans }}
-                </a>
-              </li>
-            </ul>
+            
+          </ul>
+        </div>
+      </nav>
+    </header>
+    
+    
+    {# pass a string argument to get only the messages of that type #}
+{% for message in app.flashes('success') %}
+    <div class="alert alert-notice" role="alert">
+        {{ message }}
+    </div>
+{% endfor %}
 
-            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-              <span>{{ "Saved reports" | trans }}</span>
-              <a class="d-flex align-items-center text-muted" href="#">
-                <span data-feather="plus-circle"></span>
-              </a>
-            </h6>
-            <ul class="nav flex-column mb-2">
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  {{ "Current month" | trans }}
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  {{ "Last quarter" | trans }}
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  {{ "Social engagement" | trans }}
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  {{ "Year-end sale" | trans }}
-                </a>
-              </li>
-            </ul>
-        </nav>
+{# pass an array argument to get the messages of those types  #}
+{% for label, messages in app.flashes(['warning', 'error']) %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }}" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+	
     
-    <div id="content">
-    
-     	<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+     	<main role="main">
         {% block body %}{% endblock %}  
         </main>
-    </div>    
-</div>    
-        
+
         {% block javascripts %}
-        
-        <script type="text/Javascript">
-
-        $(document).ready(function () {
-
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-            });
-
-        });
-        
-        </script>
-        
         {% endblock %}
         
     </body>
