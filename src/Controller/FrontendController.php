@@ -103,11 +103,22 @@ class FrontendController extends Controller
      * @param int $id
      * @param CategoryRepository $categoryRepository
      */
-    function viewCategory(int $id, CategoryRepository $categoryRepository, Category $category) {
+    function viewCategory(int $id, CategoryRepository $categoryRepository, ProductRepository $prodRepository, Category $category) {
+        
+        $request = Request::createFromGlobals();
+        
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $prodRepository->getActiveProductsByCategory($id), /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            6/*limit per page*/
+            );
+        
+        
         return $this->render('frontend/category_window.html.twig', [
             'categories' => $categoryRepository->findAll(),
             'category' => $category,
-            'products' => $categoryRepository->getActiveProducts($id)
+            'products' => $pagination
         ]);
     }
         

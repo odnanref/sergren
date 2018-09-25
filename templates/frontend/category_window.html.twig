@@ -30,10 +30,13 @@
 
 	<div class="row"><h1>{{ category.name }}</h1></div>
 	
-	<div class="row">{{ "Medias" | trans }}</div>
+{# display navigation #}
+<div class="navigation">
+    {{ knp_pagination_render(products) }}
+</div>
 	
 	<div class="row">
-		{% for product in category.products %}
+		{% for product in products %}
 		<div class="col-md-4">
 		<div class="card mb-4 box-shadow">
 		{% if product.medias | length > 0 %}
@@ -57,6 +60,12 @@
 		</div>
         {% endfor %}
 	</div>
+
+{# display navigation #}
+<div class="navigation">
+    {{ knp_pagination_render(products) }}
+</div>
+
 
 </div>
 
