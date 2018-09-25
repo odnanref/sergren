@@ -17,7 +17,7 @@ class PageType extends AbstractType
             ->add('description', TextareaType::class)
             ->add('keywords')
             ->add('body', TextareaType::class, array(
-                'attr' => array('class' => 'tinymce', 'cols' => 60, 'rows' => 20),  
+                'attr' => array('cols' => 60, 'rows' => 20),  
             ))
             ->add('url')
         ;
