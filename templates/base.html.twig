@@ -9,6 +9,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://cdn.ckeditor.com/ckeditor5/11.0.1/classic/ckeditor.js"></script>
         
 {% block stylesheets %}
 <style>
@@ -106,6 +107,10 @@ ul ul a {
     background: #6d7fcc;
 }
 
+.ack-editor__editable {
+    min-height: 400px;
+}
+
 </style>
 {% endblock %}
 
@@ -195,6 +200,24 @@ ul ul a {
         </main>
 
         {% block javascripts %}
+<script type="text/Javascript">
+
+ClassicEditor
+.create( document.querySelector( '#page_body' ), {
+    toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
+    heading: {
+        options: [
+            { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+            { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+            { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' }
+        ]
+    }
+} )
+.catch( error => {
+    console.log( error );
+} );
+
+</script>
         {% endblock %}
         
     </body>
