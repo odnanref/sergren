@@ -115,7 +115,7 @@ class Product
     }
 
     /**
-     * @return \App\Entity\Media
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMedias() : \Doctrine\Common\Collections\Collection
     {
