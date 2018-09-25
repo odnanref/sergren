@@ -33,7 +33,7 @@
 
 @media (max-width: 320px) {
 	#mainimage {
-		width: 320px;
+		width: 250px;
 	}
 }
 
@@ -43,7 +43,7 @@
 
 {% block body %}
 
-<div class="container">
+<div class="container-fluid">
 
 <div class="jumbotron-fluid">
   <h1 class="display-4">{{ product.name }}</h1>
@@ -56,7 +56,9 @@
 </div>
 
     <div class="row">
-    	<h1>{{ "Media" | trans }}</h1>
+    	<div class="col">
+    		<h1>{{ "Media" | trans }}</h1>
+    	</div>
     </div>
     
 <div class="row">
@@ -68,12 +70,15 @@
 </div>
     
 <div class="row">
+	<div class="col">
 	<h3>{{ "Attributes" | trans }}</h3>
+	</div>
 </div>    
+
     <div class="row" style="background-color: green; color: white; font-weight: bold;">
     {% for attrib in product.productAttributes %}
     {% if attrib.type != 'hidden' %}
-      <div class="col">
+      <div class="col-sm">
           <span style="color: black;">{{ attrib.name }}</span>&nbsp;
           {{ attrib.value }}
       </div>
