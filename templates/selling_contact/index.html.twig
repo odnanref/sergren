@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "SellingContact" | trans }} {{ "index" | trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ "SellingContact" | trans }} {{ "index" | trans }}</h1>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>{{ "Name" | trans }}</th>
+                <th>{{ "Phone1" | trans }}</th>
+                <th>{{ "Phone2" | trans }}</th>
+                <th>{{ "Email" | trans }}</th>
+                <th>{{ "Bestcontacttime" | trans }}</th>
+                <th>{{ "Brand" | trans }}</th>
+                <th>{{ "Model" | trans }}</th>
+                <th>{{ "Yearmade" | trans }}</th>
+                <th>{{ "Yearmodel" | trans }}</th>
+                <th>{{ "Fuel" | trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for selling_contact in selling_contacts %}
+            <tr>
+                <td>{{ selling_contact.id }}</td>
+                <td>{{ selling_contact.name }}</td>
+                <td>{{ selling_contact.phone1 }}</td>
+                <td>{{ selling_contact.phone2 }}</td>
+                <td>{{ selling_contact.email }}</td>
+                <td>{{ selling_contact.bestcontacttime }}</td>
+                <td>{{ selling_contact.brand }}</td>
+                <td>{{ selling_contact.model }}</td>
+                <td>{{ selling_contact.yearmade }}</td>
+                <td>{{ selling_contact.yearmodel }}</td>
+                <td>{{ selling_contact.fuel }}</td>
+           </tr>
+           <tr>
+           		<td>
+                	<a href="{{ path('selling_contact_show', {'id': selling_contact.id}) }}" class="btn btn-primary">{{ "show" | trans }}</a>
+                </td>
+                <td>
+                	<a href="{{ path('selling_contact_edit', {'id': selling_contact.id}) }}" class="btn btn-primary">{{ "edit" | trans }}</a>
+                </td>
+                <td colspan="9">
+                
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="24">{{ "no records found" | trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('selling_contact_new') }}" class="btn btn-primary">{{ "Create new" | trans }}</a>
+    
+{% endblock %}

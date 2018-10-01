@@ -55,4 +55,5 @@
 
 # Embedded web-server pid file
 /.web-server-pid
+/public/uploads/*
 

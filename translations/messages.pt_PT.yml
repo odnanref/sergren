@@ -76,5 +76,29 @@ This Url is already being used: Este Url já está a ser usado
 Already exists Url: Url já existe
 Page: Página
 Body: Corpo/Conteúdo
-
+SellingContact: Contacto de Venda
+Phone1: Telefone 1
+Phone2: Telefone 2
+Bestcontacttime: Melhor altura para contacto
+Brand: Marca
+Model: Modelo
+Yearmade: Ano de Fabrico
+Yearmodel: Ano do Modelo
+Millage: Quilometragem
+Collor: Cor
+Color: Cor
+Doors: Portas
+Gears: Câmbio
+State_chassi: Estado do Chassi
+Engine: Motor
+Glass: Vidros
+Exhaust: Escapamento
+Tires: Pneus
+Transmission: Transmissão
+Interior: Interior
+Hasdamage: Tem danos?
+State chassi: Estado do Chassi
+Data saved: Dados salvos
+Fuel: Combustível
+Please in the fields about the car state specify between 1 (lowest) and 10(best) quality: Por favor especifique abaixo entre 1 (mau estado) e 10 (excelente estado) a qualidade dos itens referidos
 

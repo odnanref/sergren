@@ -1,0 +1,23 @@
+{% extends 'basesite.html.twig' %}
+
+{% block title %}{{ "New" | trans }} {{ "SellingContact" | trans }}{% endblock %}
+
+{% block body %}
+<div class="content px-3" style="margin-top: 14px;">
+
+    <h1>{{ "Create new" | trans }} {{ "SellingContact" | trans }}</h1>
+
+{% if state == true %}
+<div class="alert alert-success">{{ "Data saved" | trans  }}</div>
+{% endif %}
+        
+  <p class="alert alert-warning">
+  {{ "Please in the fields about the car state specify between 1 (lowest) and 10(best) quality" | trans }}
+  </p>      
+        
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-primary">{{ button_label|default('Enviar') }}</button>
+{{ form_end(form) }}
+</div>
+{% endblock %}

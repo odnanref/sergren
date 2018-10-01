@@ -48,7 +48,7 @@
             </li>
             {% endfor %}
             <li class="nav-item">
-              <a class="nav-link" href="#">{{ "Want to sell" | trans }}</a>
+              <a class="nav-link" href="{{ path("frontend_view_quero_vender") }}">{{ "Want to sell" | trans }}</a>
             </li>
           </ul>
           <form class="form-inline mt-2 mt-md-0" action="{{ path("frontend_view_search") }}" method="GET">

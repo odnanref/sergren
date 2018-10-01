@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "Edit" | trans }} {{"SellingContact" | trans}}{% endblock %}
+
+{% block body %}
+    <h1>{{ "Edit" | trans }} {{"SellingContact" | trans}}</h1>
+
+    {{ include('selling_contact/_form.html.twig', {'button_label': 'Update'}) }}
+        <div class="col-sm-1 col-xs-1 col-md-1 col-lg-1"></div> 
+
+    <a href="{{ path('selling_contact_index') }}" class="btn btn-primary">{{ "back to list" | trans }}</a>
+        <div class="col-sm-1 col-xs-1 col-md-1 col-lg-1"></div> 
+
+    {{ include('selling_contact/_delete_form.html.twig') }}
+{% endblock %}

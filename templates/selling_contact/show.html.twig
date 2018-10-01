@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{"SellingContact" | trans}}{% endblock %}
+
+{% block body %}
+    <h1>{{ "SellingContact" | trans }}</h1>
+
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ selling_contact.id }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Name"  | trans}}</th>
+                <td>{{ selling_contact.name }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Phone1" | trans }}</th>
+                <td>{{ selling_contact.phone1 }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Phone2" | trans }}</th>
+                <td>{{ selling_contact.phone2 }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Email" | trans }}</th>
+                <td>{{ selling_contact.email }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Bestcontacttime" | trans }}</th>
+                <td>{{ selling_contact.bestcontacttime }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Brand" | trans }}</th>
+                <td>{{ selling_contact.brand }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Model" | trans }}</th>
+                <td>{{ selling_contact.model }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Yearmade" | trans }}</th>
+                <td>{{ selling_contact.yearmade }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Yearmodel" | trans }}</th>
+                <td>{{ selling_contact.yearmodel }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Millage" | trans }}</th>
+                <td>{{ selling_contact.millage }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Collor" | trans }}</th>
+                <td>{{ selling_contact.collor }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Fuel" | trans }}</th>
+                <td>{{ selling_contact.fuel }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Doors" | trans }}</th>
+                <td>{{ selling_contact.doors }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Gears" | trans }}</th>
+                <td>{{ selling_contact.gears }}</td>
+            </tr>
+            <tr>
+                <th>{{ "State_chassi" | trans }}</th>
+                <td>{{ selling_contact.stateChassi }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Engine" | trans }}</th>
+                <td>{{ selling_contact.engine }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Glass"  |trans }}</th>
+                <td>{{ selling_contact.glass }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Exhaust" | trans }}</th>
+                <td>{{ selling_contact.exhaust }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Tires" | trans }}</th>
+                <td>{{ selling_contact.tires }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Transmission" | trans }}</th>
+                <td>{{ selling_contact.transmission }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Interior" | trans }}</th>
+                <td>{{ selling_contact.interior }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Hasdamage" | trans }}</th>
+                <td>{{ selling_contact.hasdamage ? 'Sim' : 'Não' }}</td>
+            </tr>
+            <tr>
+                <th>{{ "Description" | trans }}</th>
+                <td>{{ selling_contact.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+        <div class="col-sm-1 col-xs-1 col-md-1 col-lg-1"></div> 
+
+    <a href="{{ path('selling_contact_index') }}" class="btn btn-primary">{{ "back to list" | trans }}</a>
+        <div class="col-sm-1 col-xs-1 col-md-1 col-lg-1"></div> 
+
+    <a href="{{ path('selling_contact_edit', {'id': selling_contact.id}) }}" class="btn btn-primary">{{ "edit" | trans }}</a>
+        <div class="col-sm-1 col-xs-1 col-md-1 col-lg-1"></div> 
+
+    {{ include('selling_contact/_delete_form.html.twig') }}
+            <div class="col-sm-1 col-xs-1 col-md-1 col-lg-1"></div> 
+    
+{% endblock %}

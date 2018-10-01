@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\SellingContact;
 use App\Repository\CategoryRepository;
 use App\Repository\PageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ProductRepository;
 use App\Entity\ProductView;
+use App\Form\SellingContactType;
 
 class FrontendController extends Controller
 {
@@ -169,4 +171,36 @@ class FrontendController extends Controller
             'page' => $page[0]
         ]);
     }
+
+    /**
+     * @Route("/quero-vender", name="frontend_view_quero_vender", methods="GET|POST")
+     */
+    function QueroVender(CategoryRepository $categoryRepository) {
+        
+        $request = Request::createFromGlobals();
+        $sellingContact = new SellingContact();
+        $form = $this->createForm(SellingContactType::class, $sellingContact);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($sellingContact);
+            $em->flush();
+            
+            return $this->render('frontend/selling_contact_new.html.twig',[
+                'categories' => $categoryRepository->findAll(),
+                'selling_contact' => $sellingContact,
+                'form' => $form->createView(),
+                'state' => true
+            ]);
+        }
+        
+        return $this->render('frontend/selling_contact_new.html.twig', [
+            'categories' => $categoryRepository->findAll(),
+            'selling_contact' => $sellingContact,
+            'form' => $form->createView(),
+            'state' => false
+        ]);
+    }
+    
 }

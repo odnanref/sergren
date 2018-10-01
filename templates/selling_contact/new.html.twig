@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "New" | trans }} {{ "SellingContact" | trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ "Create new" | trans }} {{ "SellingContact" | trans }}</h1>
+        
+    {{ include('selling_contact/_form.html.twig') }}
+        <div class="col-sm-1 col-xs-1 col-md-1 col-lg-1"></div> 
+
+    <a href="{{ path('selling_contact_index') }}" class="btn btn-primary">{{ "back to list" | trans }}</a>
+            <div class="col-sm-1 col-xs-1 col-md-1 col-lg-1"></div> 
+    
+{% endblock %}
