@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1>{{ "Page" | trans }} {{"index" | trans }}</h1>
-
+<div class="table-responsive">
     <table class="table">
         <thead>
             <tr>
@@ -39,6 +39,6 @@
         {% endfor %}
         </tbody>
     </table>
-
+</div>
     <a href="{{ path('page_new') }}" class="btn btn-primary">{{ "Create new" | trans }}</a>
 {% endblock %}

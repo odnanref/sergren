@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1>{{ "SellingContact" | trans }} {{ "index" | trans }}</h1>
-
+<div class="table-responsive">
     <table class="table table-hover">
         <thead>
             <tr>
@@ -54,7 +54,7 @@
         {% endfor %}
         </tbody>
     </table>
-
+</div>
     <a href="{{ path('selling_contact_new') }}" class="btn btn-primary">{{ "Create new" | trans }}</a>
     
 {% endblock %}
