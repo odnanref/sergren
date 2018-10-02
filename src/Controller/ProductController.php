@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Entity\ProductReportView;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -233,9 +234,37 @@ class ProductController extends Controller
     {
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
+            
+            $prvRepo = $em->getRepository(ProductReportView::class);
+            $reports = $prvRepo->findBy(["Product" => $product->getId()]);
+            for ($i=0; $i < count($reports); $i++) {
+                $em->remove($reports[$i]);
+            }
+            
+            $pattributes = $product->getProductAttributes();
+            for ($i=0; $i < count($pattributes); $i++) {
+                $em->remove($pattributes[$i]);
+            }
+            
+            $medias = $product->getMedias();
+            for ($i=0; $i < count($medias); $i++) {
+                /** @var \App\Entity\Media $media */
+                $media = $medias[$i];
+                if (trim($media->getPath()) != "") {
+                    $path = $this->getParameter('media_directory') . DIRECTORY_SEPARATOR . $media->getPath();
+                    if (is_readable($path)) {
+                        \unlink($path);
+                    }
+                    $thumb = $this->getParameter('media_directory') . DIRECTORY_SEPARATOR . $media->getThumb();
+                    if (is_readable($thumb)) {
+                        \unlink($thumb);
+                    }
+                }
+            }
+            
             $em->remove($product);
             $em->flush();
-            $this->addFlash("success", $translator->trans("Success saving") . ".");
+            $this->addFlash("success", $translator->trans("Success deleting") . ".");
         }
 
         return $this->redirectToRoute('product_index');
