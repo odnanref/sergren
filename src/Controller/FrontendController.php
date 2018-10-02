@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\CategoryView;
 use App\Entity\SellingContact;
 use App\Repository\CategoryRepository;
 use App\Repository\PageRepository;
@@ -133,7 +134,31 @@ class FrontendController extends Controller
      */
     function viewCategoryByUrl(string $url, CategoryRepository $categoryRepository, ProductRepository $prodRepository, Category $category) {
         
+        $res = $categoryRepository->findBy(['url' => $url]);
+        if (count($res) <= 0 ) {
+            throw $this->createNotFoundException("The category wasn't found. $url");
+        }
+        $category = $res[0];
+        
         $request = Request::createFromGlobals();
+        $headers = $request->headers->all();
+        
+        // product view saves access to a product
+        $catview = new CategoryView();
+        $catview->setIpaddress($request->getClientIp());
+        $catview->setCategory($category);
+        if (array_key_exists("user-agent", $headers)) {
+            $catview->setUseragent($headers['user-agent'][0]);
+        }
+        
+        if (array_key_exists("referer", $headers)) {
+            $catview->setReferer($headers['referer'][0]);
+        }
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($catview);
+        $em->flush();
+        
         
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(

@@ -12,6 +12,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use App\Repository\ProductRepository;
 use App\Service\BuildReport;
 use phpDocumentor\Reflection\Types\Null_;
+use App\Repository\CategoryRepository;
 
 
 class BuildreportCommand extends Command
@@ -23,6 +24,12 @@ class BuildreportCommand extends Command
      * @var \App\Repository\ProductRepository
      */
     private $productRepo;
+    
+    /**
+     * access the categories table
+     * @var \App\Repository\CategoryRepository
+     */
+    private $catRepo;
     
     /**
      * build the report
@@ -38,9 +45,10 @@ class BuildreportCommand extends Command
     private $logger;
     
     
-    function __construct(ProductRepository $productRepo, BuildReport $buildReport, LoggerInterface $logger)
+    function __construct(ProductRepository $productRepo, CategoryRepository $catRepo, BuildReport $buildReport, LoggerInterface $logger)
     {
         $this->productRepo = $productRepo;
+        $this->catRepo = $catRepo;
         $this->buildReport = $buildReport;
         $this->logger = $logger;
         parent::__construct();
@@ -72,8 +80,14 @@ class BuildreportCommand extends Command
         
         $products = $this->productRepo->findAll();
         for($i = 0; $i < count($products); $i++) {
-            $this->buildReport->build($year, $month, $products[$i]);
+            $this->buildReport->buildProductReport($year, $month, $products[$i]);
         }
+        
+        $categories = $this->catRepo->findAll();
+        for($i = 0; $i < count($categories); $i++) {
+            $this->buildReport->buildCategoryReport($year, $month, $categories[$i]);
+        }
+        
         
         $this->logger->info('Report run for month ' . \date('m') . " and year " . \date("Y") );
         $io->success('Report run for month ' . \date('m') . " and year " . \date("Y") );

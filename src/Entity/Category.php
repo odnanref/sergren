@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -45,6 +46,16 @@ class Category
      * @ORM\Column(type="string", length=255, nullable=true, unique=true)
      */
     private $url;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CategoryView", mappedBy="Category")
+     */
+    private $categoryViews;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CategoryReportView", mappedBy="Category", orphanRemoval=true)
+     */
+    private $categoryReportViews;
     
     /**
      * @return string
@@ -90,6 +101,8 @@ class Category
 
     function __construct(){
         $this->products = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->categoryViews = new ArrayCollection();
+        $this->categoryReportViews = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -135,5 +148,67 @@ class Category
     
     function __toString() {
         return $this->getId() . " " . $this->getName();
+    }
+
+    /**
+     * @return Collection|CategoryView[]
+     */
+    public function getDatecreated(): Collection
+    {
+        return $this->datecreated;
+    }
+
+    public function addDatecreated(CategoryView $datecreated): self
+    {
+        if (!$this->categoryViews->contains($datecreated)) {
+            $this->categoryViews[] = $datecreated;
+            $datecreated->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDatecreated(CategoryView $categoryView): self
+    {
+        if ($this->categoryViews->contains($datecreated)) {
+            $this->categoryViews->removeElement($datecreated);
+            // set the owning side to null (unless already changed)
+            if ($categoryView->getCategory() === $this) {
+                $categoryView->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CategoryReportView[]
+     */
+    public function getCategoryReportViews(): Collection
+    {
+        return $this->categoryReportViews;
+    }
+
+    public function addCategoryReportView(CategoryReportView $categoryReportView): self
+    {
+        if (!$this->categoryReportViews->contains($categoryReportView)) {
+            $this->categoryReportViews[] = $categoryReportView;
+            $categoryReportView->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategoryReportView(CategoryReportView $categoryReportView): self
+    {
+        if ($this->categoryReportViews->contains($categoryReportView)) {
+            $this->categoryReportViews->removeElement($categoryReportView);
+            // set the owning side to null (unless already changed)
+            if ($categoryReportView->getCategory() === $this) {
+                $categoryReportView->setCategory(null);
+            }
+        }
+
+        return $this;
     }
 }
