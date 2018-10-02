@@ -186,7 +186,7 @@ ul ul a {
 <div class="content-fluid">
     {# pass a string argument to get only the messages of that type #}
 {% for message in app.flashes('success') %}
-    <div class="alert alert-notice" role="alert">
+    <div class="alert alert-success" role="alert">
         {{ message }}
     </div>
 {% endfor %}
