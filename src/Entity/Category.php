@@ -42,6 +42,36 @@ class Category
     protected $products;
     
     /**
+     * @ORM\Column(type="string", length=255, nullable=true, unique=true)
+     */
+    private $url;
+    
+    /**
+     * @return string
+     */
+    public function getUrl() : string
+    {
+        if ($this->url !== null) {
+            return $this->url;
+        } else {
+            return $this->url = strtolower(trim(str_replace(" ", "-", $this->getName())));
+        }
+    }
+
+    /**
+     * @param string|null $url
+     */
+    public function setUrl(?string $url) : self
+    {
+        if (trim($url) == "") {
+            $url = $this->getName();
+        }
+        $this->url = strtolower(trim(str_replace(" ", "-", $url)));
+        
+        return $this;
+    }
+
+    /**
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function getProducts() : \Doctrine\Common\Collections\Collection

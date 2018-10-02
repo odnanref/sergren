@@ -46,6 +46,20 @@ class ProductRepository extends ServiceEntityRepository
         return $q->getResult();
     }
     
+    function getActiveProductsByCategoryUrl($url) {
+        $q = $this->createQueryBuilder("p")
+        ->leftJoin("p.productAttributes", "pA")
+        ->leftJoin("p.medias", "medias")
+        ->leftJoin("p.categories", 'categories')
+        ->andWhere("p.state = 1 ")
+        ->andWhere("categories.url = :url")
+        ->setParameter("url", $url)
+        ->getQuery();
+        
+        return $q->getResult();
+    }
+    
+    
     function getActive(int $id) {
         $q = $this->createQueryBuilder("p")
         ->leftJoin("p.productAttributes", "pA")

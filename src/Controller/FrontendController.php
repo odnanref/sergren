@@ -123,6 +123,32 @@ class FrontendController extends Controller
             'products' => $pagination
         ]);
     }
+    
+    /**
+     *
+     * @Route("/cat/{url}", name="frontend_view_category_url")
+     *
+     * @param string $url
+     * @param CategoryRepository $categoryRepository
+     */
+    function viewCategoryByUrl(string $url, CategoryRepository $categoryRepository, ProductRepository $prodRepository, Category $category) {
+        
+        $request = Request::createFromGlobals();
+        
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $prodRepository->getActiveProductsByCategoryUrl($url), /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            6/*limit per page*/
+            );
+        
+        
+        return $this->render('frontend/category_window.html.twig', [
+            'categories' => $categoryRepository->findAll(),
+            'category' => $category,
+            'products' => $pagination
+        ]);
+    }
         
     /**
      * @Route("/search", name="frontend_view_search", methods="GET")
